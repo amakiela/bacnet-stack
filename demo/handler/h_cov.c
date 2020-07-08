@@ -40,6 +40,8 @@
 #include "cov.h"
 #include "tsm.h"
 #include "dcc.h"
+#include "ai.h"
+#include "bi.h"
 #if PRINT_ENABLED
 #include "bactext.h"
 #endif
@@ -602,7 +604,33 @@ void handler_cov_timer_seconds(
                     /* only expire COV with definite lifetimes */
                     cov_lifetime_expiration_handler(index, elapsed_seconds,
                         lifetime_seconds);
-                }
+                } else {
+					uint16_t type =
+							COV_Subscriptions[index].monitoredObjectIdentifier.type;
+					uint32_t instance =
+							COV_Subscriptions[index].monitoredObjectIdentifier.instance;
+					float a;
+					BACNET_BINARY_PV b;
+
+					switch (type) {
+					case OBJECT_ANALOG_INPUT:
+						a = Analog_Input_Present_Value(instance);
+						a += 1;
+						if (a > 10000.0)
+							a = 0;
+						Analog_Input_Present_Value_Set(instance, a);
+						break;
+
+					case OBJECT_BINARY_INPUT:
+						b = Binary_Input_Present_Value(instance);
+						if (b == BINARY_INACTIVE)
+							b = BINARY_ACTIVE;
+						else
+							b = BINARY_INACTIVE;
+						Binary_Input_Present_Value_Set(instance, b);
+						break;
+					}
+				}
             }
         }
     }

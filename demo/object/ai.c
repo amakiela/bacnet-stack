@@ -112,7 +112,7 @@ void Analog_Input_Init(
 #endif
 
     for (i = 0; i < MAX_ANALOG_INPUTS; i++) {
-        AI_Descr[i].Present_Value = 0.0f;
+        AI_Descr[i].Present_Value = 1.25f;
         AI_Descr[i].Out_Of_Service = false;
         AI_Descr[i].Units = UNITS_PERCENT;
         AI_Descr[i].Reliability = RELIABILITY_NO_FAULT_DETECTED;

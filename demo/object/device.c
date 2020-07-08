@@ -118,9 +118,9 @@ static object_functions_t My_Object_Table[] = {
             Analog_Input_Property_Lists,
             NULL /* ReadRangeInfo */ ,
             NULL /* Iterator */ ,
-            NULL /* Value_Lists */ ,
-            NULL /* COV */ ,
-            NULL /* COV Clear */ ,
+            Analog_Input_Encode_Value_List,
+            Analog_Input_Change_Of_Value,
+            Analog_Input_Change_Of_Value_Clear,
         Analog_Input_Intrinsic_Reporting},
     {OBJECT_ANALOG_OUTPUT,
             Analog_Output_Init,
@@ -554,7 +554,7 @@ void Device_Property_Lists(
    The properties that are constant can be hard coded
    into the read-property encoding. */
 
-static uint32_t Object_Instance_Number = 260001;
+static uint32_t Object_Instance_Number = 1234;
 static BACNET_CHARACTER_STRING My_Object_Name;
 static BACNET_DEVICE_STATUS System_Status = STATUS_OPERATIONAL;
 static char *Vendor_Name = BACNET_VENDOR_NAME;
